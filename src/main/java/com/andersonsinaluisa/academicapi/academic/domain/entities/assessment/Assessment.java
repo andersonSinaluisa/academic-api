@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class Assessment {
     public Long id;
     public String subjectId;
-    public String teacherId;
+    public Long teacherId;
     public String academicYearId;
     public String title;
     public String description;
