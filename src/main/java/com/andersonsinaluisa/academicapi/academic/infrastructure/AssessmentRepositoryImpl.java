@@ -25,6 +25,16 @@ public class AssessmentRepositoryImpl implements AssessmentRepository {
         return repository.findAll().map(this::toDomain);
     }
 
+    @Override
+    public Mono<Assessment> findById(Long id) {
+        return repository.findById(id).map(this::toDomain);
+    }
+
+    @Override
+    public Mono<Void> deleteById(Long id) {
+        return repository.deleteById(id);
+    }
+
     private AssessmentTable toTable(Assessment a) {
         return AssessmentTable.builder()
                 .id(a.id)

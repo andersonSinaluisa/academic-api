@@ -7,5 +7,7 @@ import reactor.core.publisher.Mono;
 public interface AssessmentRepository {
     Mono<Assessment> save(Assessment assessment);
     Flux<Assessment> findAll();
+    Mono<Assessment> findById(Long id);
+    Mono<Void> deleteById(Long id);
 }
 

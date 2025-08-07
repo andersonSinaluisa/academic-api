@@ -56,6 +56,12 @@ public class RepresentativeRepositoryImpl implements RepresentativeRepository {
     }
 
     @Override
+    public Mono<Representative> getById(Long id) {
+        return representativePgRepository.findById(id)
+                .map(RepresentativeTableMapper::fromPersistenceToDomain);
+    }
+
+    @Override
     public Mono<Page<Representative>> all(Pageable pageable,
                                           FilterCriteria filterCriteria) {
         int pageSize = pageable.getPageSize();

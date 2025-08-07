@@ -26,6 +26,16 @@ public class MeetingRepositoryImpl implements MeetingRepository {
         return repository.findAll().map(this::toDomain);
     }
 
+    @Override
+    public Mono<Meeting> findById(Long id) {
+        return repository.findById(id).map(this::toDomain);
+    }
+
+    @Override
+    public Mono<Void> deleteById(Long id) {
+        return repository.deleteById(id);
+    }
+
     private MeetingTable toTable(Meeting m) {
         return MeetingTable.builder()
                 .id(m.id)

@@ -19,5 +19,7 @@ public interface RepresentativeRepository {
 
     Mono<Page<Representative>> all(Pageable pageable, FilterCriteria filterCriteria);
 
+    Mono<Representative> getById(Long id);
+
 
 }

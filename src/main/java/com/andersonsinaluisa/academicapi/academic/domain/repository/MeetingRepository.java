@@ -7,5 +7,7 @@ import reactor.core.publisher.Mono;
 public interface MeetingRepository {
     Mono<Meeting> save(Meeting meeting);
     Flux<Meeting> findAll();
+    Mono<Meeting> findById(Long id);
+    Mono<Void> deleteById(Long id);
 }
 
