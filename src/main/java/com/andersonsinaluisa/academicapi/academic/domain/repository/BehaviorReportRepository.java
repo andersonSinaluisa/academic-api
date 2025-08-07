@@ -7,5 +7,7 @@ import reactor.core.publisher.Mono;
 public interface BehaviorReportRepository {
     Mono<BehaviorReport> save(BehaviorReport report);
     Flux<BehaviorReport> findAll();
+    Mono<BehaviorReport> findById(Long id);
+    Mono<Void> deleteById(Long id);
 }
 

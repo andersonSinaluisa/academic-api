@@ -25,6 +25,16 @@ public class EnrollmentRepositoryImpl implements EnrollmentRepository {
         return repository.findAll().map(this::toDomain);
     }
 
+    @Override
+    public Mono<Enrollment> findById(Long id) {
+        return repository.findById(id).map(this::toDomain);
+    }
+
+    @Override
+    public Mono<Void> deleteById(Long id) {
+        return repository.deleteById(id);
+    }
+
     private EnrollmentTable toTable(Enrollment e) {
         return EnrollmentTable.builder()
                 .id(e.id)

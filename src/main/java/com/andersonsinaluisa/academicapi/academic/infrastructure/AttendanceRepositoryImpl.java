@@ -25,6 +25,16 @@ public class AttendanceRepositoryImpl implements AttendanceRepository {
         return repository.findAll().map(this::toDomain);
     }
 
+    @Override
+    public Mono<Attendance> findById(Long id) {
+        return repository.findById(id).map(this::toDomain);
+    }
+
+    @Override
+    public Mono<Void> deleteById(Long id) {
+        return repository.deleteById(id);
+    }
+
     private AttendanceTable toTable(Attendance a) {
         return AttendanceTable.builder()
                 .id(a.id)

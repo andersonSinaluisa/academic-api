@@ -25,6 +25,16 @@ public class BehaviorReportRepositoryImpl implements BehaviorReportRepository {
         return repository.findAll().map(this::toDomain);
     }
 
+    @Override
+    public Mono<BehaviorReport> findById(Long id) {
+        return repository.findById(id).map(this::toDomain);
+    }
+
+    @Override
+    public Mono<Void> deleteById(Long id) {
+        return repository.deleteById(id);
+    }
+
     private BehaviorReportTable toTable(BehaviorReport b) {
         return BehaviorReportTable.builder()
                 .id(b.id)

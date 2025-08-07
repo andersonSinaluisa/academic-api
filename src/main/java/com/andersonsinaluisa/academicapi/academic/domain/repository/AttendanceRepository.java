@@ -7,5 +7,7 @@ import reactor.core.publisher.Mono;
 public interface AttendanceRepository {
     Mono<Attendance> save(Attendance attendance);
     Flux<Attendance> findAll();
+    Mono<Attendance> findById(Long id);
+    Mono<Void> deleteById(Long id);
 }
 
