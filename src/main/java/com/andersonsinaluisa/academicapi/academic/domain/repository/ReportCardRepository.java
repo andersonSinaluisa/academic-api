@@ -7,5 +7,7 @@ import reactor.core.publisher.Mono;
 public interface ReportCardRepository {
     Mono<ReportCard> save(ReportCard reportCard);
     Flux<ReportCard> findAll();
+    Mono<ReportCard> findByStudentIdAndAcademicYearId(Long studentId, String academicYearId);
+    Flux<ReportCard> findByStudentId(Long studentId);
 }
 
