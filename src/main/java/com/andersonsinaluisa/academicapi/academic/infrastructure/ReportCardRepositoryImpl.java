@@ -26,6 +26,16 @@ public class ReportCardRepositoryImpl implements ReportCardRepository {
         return repository.findAll().map(this::toDomain);
     }
 
+    @Override
+    public Mono<ReportCard> findByStudentIdAndAcademicYearId(Long studentId, String academicYearId) {
+        return repository.findByStudentIdAndAcademicYearId(studentId, academicYearId).map(this::toDomain);
+    }
+
+    @Override
+    public Flux<ReportCard> findByStudentId(Long studentId) {
+        return repository.findByStudentId(studentId).map(this::toDomain);
+    }
+
     private ReportCardTable toTable(ReportCard r) {
         return ReportCardTable.builder()
                 .id(r.id)

@@ -4,6 +4,8 @@ import com.andersonsinaluisa.academicapi.academic.application.dtos.ReportCardDto
 import com.andersonsinaluisa.academicapi.academic.domain.entities.reports.ReportCard;
 import com.andersonsinaluisa.academicapi.academic.domain.valueObjects.Score;
 
+import java.util.Collections;
+
 public class ReportCardMapper {
     public static ReportCard fromDtoToDomain(ReportCardDto dto) {
         return ReportCard.builder()
@@ -22,6 +24,7 @@ public class ReportCardMapper {
                 .studentId(reportCard.studentId)
                 .averageScore(reportCard.averageScore.getValue())
                 .status(reportCard.status)
+                .subjects(Collections.emptyList())
                 .build();
     }
 }
