@@ -142,23 +142,6 @@
 
 ### DELETE `/promotion-acts/{id}`
 **Response**: 204 No Content
-
-### GET `/academic-history/{studentId}`
-**Response**
-```json
-{
-  "studentId": 123,
-  "records": [
-    {
-      "academicYearId": "2023",
-      "course": "9A",
-      "finalAverage": 8.4,
-      "status": "PROMOTED"
-    }
-  ]
-}
-```
-
 ---
 
 ## Módulo de Gestión Docente
@@ -273,6 +256,467 @@
     "createdAt": "2024-02-01T10:00:00"
   }
 ]
+```
+
+---
+
+## Módulo de Gestión de Personas
+
+### POST `/students`
+**Request**
+```json
+{
+  "firstName": "Juan",
+  "lastName": "Pérez",
+  "uuidParallel": "10A"
+}
+```
+**Response**
+```json
+{
+  "id": 1,
+  "firstName": "Juan",
+  "lastName": "Pérez",
+  "uuidParallel": "10A"
+}
+```
+
+### GET `/students?page=&limit=&uuidParallel=`
+**Response**
+```json
+[
+  {
+    "id": 1,
+    "firstName": "Juan",
+    "lastName": "Pérez",
+    "uuidParallel": "10A"
+  }
+]
+```
+
+### GET `/students/{id}`
+**Response**
+```json
+{
+  "id": 1,
+  "firstName": "Juan",
+  "lastName": "Pérez",
+  "uuidParallel": "10A"
+}
+```
+
+### PATCH `/students/{id}`
+**Request**
+```json
+{
+  "firstName": "Juan"
+}
+```
+**Response**
+```json
+{
+  "id": 1,
+  "firstName": "Juan",
+  "lastName": "Pérez",
+  "uuidParallel": "10A"
+}
+```
+
+### DELETE `/students/{id}`
+**Response**: 204 No Content
+
+### POST `/teachers`
+**Request**
+```json
+{
+  "firstName": "Ana",
+  "lastName": "García"
+}
+```
+**Response**
+```json
+{
+  "id": 1,
+  "firstName": "Ana",
+  "lastName": "García"
+}
+```
+
+### GET `/teachers?page=&limit=&firstName=&lastName=&identification=&gender=`
+**Response**
+```json
+[
+  {
+    "id": 1,
+    "firstName": "Ana",
+    "lastName": "García"
+  }
+]
+```
+
+### GET `/teachers/{id}`
+**Response**
+```json
+{
+  "id": 1,
+  "firstName": "Ana",
+  "lastName": "García"
+}
+```
+
+### PATCH `/teachers/{id}`
+**Request**
+```json
+{
+  "firstName": "Ana"
+}
+```
+**Response**
+```json
+{
+  "id": 1,
+  "firstName": "Ana",
+  "lastName": "García"
+}
+```
+
+### DELETE `/teachers/{id}`
+**Response**: 204 No Content
+
+### POST `/representative`
+**Request**
+```json
+{
+  "firstName": "Luis",
+  "lastName": "Mora"
+}
+```
+**Response**
+```json
+{
+  "id": 1,
+  "firstName": "Luis",
+  "lastName": "Mora"
+}
+```
+
+### GET `/representative?page=&limit=`
+**Response**
+```json
+[
+  {
+    "id": 1,
+    "firstName": "Luis",
+    "lastName": "Mora"
+  }
+]
+```
+
+### GET `/representative/{id}`
+**Response**
+```json
+{
+  "id": 1,
+  "firstName": "Luis",
+  "lastName": "Mora"
+}
+```
+
+### PATCH `/representative/{id}`
+**Request**
+```json
+{
+  "firstName": "Luis"
+}
+```
+**Response**
+```json
+{
+  "id": 1,
+  "firstName": "Luis",
+  "lastName": "Mora"
+}
+```
+
+### DELETE `/representative/{id}`
+**Response**: 204 No Content
+
+---
+
+## Módulo Académico
+
+### POST `/assessments`
+**Request**
+```json
+{
+  "studentId": 1,
+  "subjectId": 2,
+  "score": 9.5
+}
+```
+**Response**
+```json
+{
+  "id": 1,
+  "studentId": 1,
+  "subjectId": 2,
+  "score": 9.5
+}
+```
+
+### GET `/assessments`
+**Response**
+```json
+[
+  {
+    "id": 1,
+    "studentId": 1,
+    "subjectId": 2,
+    "score": 9.5
+  }
+]
+```
+
+### PUT `/assessments/{id}`
+**Request**
+```json
+{
+  "score": 8.0
+}
+```
+**Response**
+```json
+{
+  "id": 1,
+  "studentId": 1,
+  "subjectId": 2,
+  "score": 8.0
+}
+```
+
+### DELETE `/assessments/{id}`
+**Response**: 204 No Content
+
+### POST `/attendance`
+**Request**
+```json
+{
+  "studentId": 1,
+  "date": "2024-02-01",
+  "status": "PRESENT"
+}
+```
+**Response**
+```json
+{
+  "id": 1,
+  "studentId": 1,
+  "date": "2024-02-01",
+  "status": "PRESENT"
+}
+```
+
+### GET `/attendance`
+**Response**
+```json
+[
+  {
+    "id": 1,
+    "studentId": 1,
+    "date": "2024-02-01",
+    "status": "PRESENT"
+  }
+]
+```
+
+### PUT `/attendance/{id}`
+**Request**
+```json
+{
+  "status": "ABSENT"
+}
+```
+**Response**
+```json
+{
+  "id": 1,
+  "studentId": 1,
+  "date": "2024-02-01",
+  "status": "ABSENT"
+}
+```
+
+### DELETE `/attendance/{id}`
+**Response**: 204 No Content
+
+### POST `/behavior-reports`
+**Request**
+```json
+{
+  "studentId": 1,
+  "description": "Llegó tarde"
+}
+```
+**Response**
+```json
+{
+  "id": 1,
+  "studentId": 1,
+  "description": "Llegó tarde"
+}
+```
+
+### GET `/behavior-reports`
+**Response**
+```json
+[
+  {
+    "id": 1,
+    "studentId": 1,
+    "description": "Llegó tarde"
+  }
+]
+```
+
+### PUT `/behavior-reports/{id}`
+**Request**
+```json
+{
+  "description": "Interrupciones en clase"
+}
+```
+**Response**
+```json
+{
+  "id": 1,
+  "studentId": 1,
+  "description": "Interrupciones en clase"
+}
+```
+
+### DELETE `/behavior-reports/{id}`
+**Response**: 204 No Content
+
+### POST `/meetings`
+**Request**
+```json
+{
+  "topic": "Reunión de padres",
+  "date": "2024-02-10"
+}
+```
+**Response**
+```json
+{
+  "id": 1,
+  "topic": "Reunión de padres",
+  "date": "2024-02-10"
+}
+```
+
+### GET `/meetings`
+**Response**
+```json
+[
+  {
+    "id": 1,
+    "topic": "Reunión de padres",
+    "date": "2024-02-10"
+  }
+]
+```
+
+### PUT `/meetings/{id}`
+**Request**
+```json
+{
+  "topic": "Reunión extraordinaria"
+}
+```
+**Response**
+```json
+{
+  "id": 1,
+  "topic": "Reunión extraordinaria",
+  "date": "2024-02-10"
+}
+```
+
+### DELETE `/meetings/{id}`
+**Response**: 204 No Content
+
+### POST `/enrollments`
+**Request**
+```json
+{
+  "studentId": 1,
+  "courseId": "10A"
+}
+```
+**Response**
+```json
+{
+  "id": 1,
+  "studentId": 1,
+  "courseId": "10A"
+}
+```
+
+### GET `/enrollments`
+**Response**
+```json
+[
+  {
+    "id": 1,
+    "studentId": 1,
+    "courseId": "10A"
+  }
+]
+```
+
+### PUT `/enrollments/{id}`
+**Request**
+```json
+{
+  "courseId": "9B"
+}
+```
+**Response**
+```json
+{
+  "id": 1,
+  "studentId": 1,
+  "courseId": "9B"
+}
+```
+
+### DELETE `/enrollments/{id}`
+**Response**: 204 No Content
+
+### POST `/grading/final?studentId=&subjectId=&schoolYearId=`
+**Response**
+```json
+{
+  "studentId": 1,
+  "subjectId": 2,
+  "finalScore": 8.5
+}
+```
+
+### GET `/academic-history/{studentId}`
+**Response**
+```json
+{
+  "studentId": 123,
+  "records": [
+    {
+      "academicYearId": "2023",
+      "course": "9A",
+      "finalAverage": 8.4,
+      "status": "PROMOTED"
+    }
+  ]
+}
 ```
 
 ---
