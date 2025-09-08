@@ -3,6 +3,7 @@ package com.andersonsinaluisa.academicapi.persons.api;
 import com.andersonsinaluisa.academicapi.persons.application.dtos.StudentInputDto;
 import com.andersonsinaluisa.academicapi.persons.application.dtos.StudentOutputDto;
 import com.andersonsinaluisa.academicapi.persons.application.mappers.StudentMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import reactor.core.publisher.Mono;
@@ -14,10 +15,15 @@ import com.andersonsinaluisa.academicapi.persons.application.usecases.student.*;
 @RequestMapping("/students")
 public class StudentController {
 
+    @Autowired
     private CreateStudentUseCase createStudentUseCase;
+    @Autowired
     private ListStudentByCourseIdUseCase listStudentByCourseIdUseCase;
+    @Autowired
     private GetByIdStudentUseCase getByIdStudentUseCase;
+    @Autowired
     private UpdateStudentUseCase updateStudentUseCase;
+    @Autowired
     private DeleteStudentUseCase deleteStudentUseCase;
     @PostMapping
     public Mono<StudentOutputDto> create(@RequestBody StudentInputDto dto){

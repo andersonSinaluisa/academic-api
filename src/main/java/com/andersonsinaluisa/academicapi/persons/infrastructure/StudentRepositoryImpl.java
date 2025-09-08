@@ -6,7 +6,7 @@ import com.andersonsinaluisa.academicapi.persons.infrastructure.database.mappers
 import com.andersonsinaluisa.academicapi.persons.infrastructure.database.repository.custom.StudentCustomRepository;
 import com.andersonsinaluisa.academicapi.persons.infrastructure.database.repository.StudentPgRepository;
 import com.andersonsinaluisa.academicapi.shared.domain.FilterCriteria;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -17,10 +17,11 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class StudentRepositoryImpl implements StudentRepository {
 
+    @Autowired
     private StudentPgRepository studentPgRepository;
+    @Autowired
     private StudentCustomRepository studentCustomRepository;
     @Override
     public Flux<Student> getByCourse(String courseId) {
