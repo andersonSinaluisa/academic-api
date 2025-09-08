@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 @Repository
 public class RepresentativeCustomRepository {
+
     private final GenericR2dbcRepository<RepresentativeTable> repository;
 
     public RepresentativeCustomRepository(DatabaseClient client) {

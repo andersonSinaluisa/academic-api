@@ -5,11 +5,11 @@ import com.andersonsinaluisa.academicapi.persons.application.dtos.Representative
 import com.andersonsinaluisa.academicapi.persons.application.dtos.RepresentativeOutputDto;
 import com.andersonsinaluisa.academicapi.persons.application.mappers.RepresentativeMapper;
 import com.andersonsinaluisa.academicapi.persons.application.usecases.representative.*;
+import com.andersonsinaluisa.academicapi.persons.domain.entities.Representative;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
-
 @RestController
 @RequestMapping("/representative")
 public class RepresentativeController {

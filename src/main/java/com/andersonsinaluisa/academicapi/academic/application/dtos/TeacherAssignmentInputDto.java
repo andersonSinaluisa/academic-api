@@ -1,5 +1,5 @@
 package com.andersonsinaluisa.academicapi.academic.application.dtos;
-
+//
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;

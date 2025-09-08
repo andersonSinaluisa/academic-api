@@ -8,7 +8,9 @@ import com.andersonsinaluisa.academicapi.persons.infrastructure.database.mappers
 import com.andersonsinaluisa.academicapi.persons.infrastructure.database.repository.TeacherPgRepository;
 import com.andersonsinaluisa.academicapi.persons.infrastructure.database.repository.custom.TeacherCustomRepository;
 import com.andersonsinaluisa.academicapi.shared.domain.FilterCriteria;
+import com.andersonsinaluisa.academicapi.shared.domain.PageResult;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -21,8 +23,9 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class TeacherRepositoryImpl implements TeacherRepository {
-
+    @Autowired
     private TeacherPgRepository teacherPgRepository;
+    @Autowired
     private TeacherCustomRepository teacherCustomRepository;
     @Override
     public Mono<Teacher> create(Teacher teacher) {
@@ -39,8 +42,8 @@ public class TeacherRepositoryImpl implements TeacherRepository {
     }
 
     @Override
-    public Mono<Page<Teacher>> findAll(Pageable pageable,
-                                       FilterCriteria filters) {
+    public Mono<PageResult<Teacher>> findAll(Pageable pageable,
+                                             FilterCriteria filters) {
         int pageSize = pageable.getPageSize();
         int offset = (int) pageable.getOffset();
 
@@ -52,8 +55,12 @@ public class TeacherRepositoryImpl implements TeacherRepository {
         Mono<Long> count = teacherCustomRepository.countWithLikeFilters(filters);
 
         return Mono.zip(content, count)
-                .map(tuple ->
-                        new PageImpl<>(tuple.getT1(), pageable, tuple.getT2()));
+                .map(tuple -> new PageResult<>(
+                        tuple.getT1(),
+                        tuple.getT2(),
+                        pageable.getPageNumber(),
+                        pageSize
+                ));
     }
 
     @Override

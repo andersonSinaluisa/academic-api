@@ -2,6 +2,7 @@ package com.andersonsinaluisa.academicapi.persons.domain.repository;
 
 import com.andersonsinaluisa.academicapi.persons.domain.entities.Teacher;
 import com.andersonsinaluisa.academicapi.shared.domain.FilterCriteria;
+import com.andersonsinaluisa.academicapi.shared.domain.PageResult;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import reactor.core.publisher.Flux;
@@ -14,7 +15,7 @@ public interface TeacherRepository {
 
     Mono<Teacher> update(Teacher teacher);
 
-    Mono<Page<Teacher>> findAll(Pageable pageable, FilterCriteria filters);
+    Mono<PageResult<Teacher>> findAll(Pageable pageable, FilterCriteria filters);
 
     Mono<Void> remove(Long id);
 

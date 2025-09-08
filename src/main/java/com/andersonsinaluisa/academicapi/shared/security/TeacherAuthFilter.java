@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
 /**
  * Simple filter that requires teacher endpoints to include the X-Teacher-Id header.
  */
-@Component
+
 public class TeacherAuthFilter implements WebFilter {
 
     @Override
