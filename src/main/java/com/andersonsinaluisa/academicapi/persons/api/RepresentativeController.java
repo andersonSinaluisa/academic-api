@@ -6,6 +6,7 @@ import com.andersonsinaluisa.academicapi.persons.application.dtos.Representative
 import com.andersonsinaluisa.academicapi.persons.application.mappers.RepresentativeMapper;
 import com.andersonsinaluisa.academicapi.persons.application.usecases.representative.*;
 import com.andersonsinaluisa.academicapi.persons.domain.entities.Representative;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +15,15 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/representative")
 public class RepresentativeController {
 
+    @Autowired
     private CreateRepresentativeUseCase createRepresentativeUseCase;
+    @Autowired
     private ListRepresentativeUseCase listRepresentativeUseCase;
+    @Autowired
     private GetByIdRepresentativeUseCase getByIdRepresentativeUseCase;
+    @Autowired
     private UpdateRepresentativeUseCase updateRepresentativeUseCase;
+    @Autowired
     private DeleteRepresentativeUseCase deleteRepresentativeUseCase;
     @PostMapping
     public Mono<RepresentativeOutputDto> create(
