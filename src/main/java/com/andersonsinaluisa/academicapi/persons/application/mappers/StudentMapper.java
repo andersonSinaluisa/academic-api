@@ -17,11 +17,11 @@ public class StudentMapper {
                 .uuidCurrentSchoolYear(studentInputDto.uuidCurrentSchoolYear)
                 .address(studentInputDto.address)
                 .birthDate(new BirthDate(studentInputDto.birthDate))
-                .fullName(new FullName(studentInputDto.fistName,studentInputDto.lastName))
+                .fullName(new FullName(studentInputDto.firstName,studentInputDto.lastName))
                 .gender(studentInputDto.gender)
                 .identification(new Identification(studentInputDto.identification))
                 .image(studentInputDto.image)
-                .nacionality(studentInputDto.nacionality)
+                .nacionality(studentInputDto.nationality)
                 .phone(new PhoneNumber(studentInputDto.phone))
                 .uuidUser(studentInputDto.uuidUser)
                 .build();

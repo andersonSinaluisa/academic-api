@@ -10,6 +10,9 @@ public class UpdateTeacherUseCase {
     @Autowired
     private TeacherRepository  teacherRepository;
     public Mono<Teacher> execute(Teacher teacher){
-        return teacherRepository.update(teacher);
+       return teacherRepository.findById(teacher.id).flatMap(
+              r -> teacherRepository.update(teacher)
+        );
+
     }
 }

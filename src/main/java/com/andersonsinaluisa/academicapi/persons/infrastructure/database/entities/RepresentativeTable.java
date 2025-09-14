@@ -15,14 +15,14 @@ import java.time.LocalDate;
 public class RepresentativeTable  {
     @Id
     public Long id;
-    public String firtName;
+    public String firstName;
     public String lastName;
     public String phone;
     public LocalDate birthDate;
     public String uuidUser;
     public String address;
     public String identification;
-    public String nacionality;
+    public String nationality;
     public String gender;
     public String image;
     public boolean deleted;

@@ -42,25 +42,32 @@ public class TeacherRepositoryImpl implements TeacherRepository {
     }
 
     @Override
-    public Mono<PageResult<Teacher>> findAll(Pageable pageable,
-                                             FilterCriteria filters) {
+    public Mono<PageResult<Teacher>> findAll(Pageable pageable, FilterCriteria filters) {
+        int pageNumber = pageable.getPageNumber() == 0 ? 0 : pageable.getPageNumber() - 1;
         int pageSize = pageable.getPageSize();
-        int offset = (int) pageable.getOffset();
+        int offset = pageNumber * pageSize;
 
         Mono<List<Teacher>> content = teacherCustomRepository
-                .findAllWithLikeFilters(filters,pageSize, offset)
+                .findAllWithFilters(filters, pageSize, offset)
                 .map(TeacherTableMapper::fromPersistenceToDomain)
                 .collectList();
 
-        Mono<Long> count = teacherCustomRepository.countWithLikeFilters(filters);
+        Mono<Long> count = teacherCustomRepository.countWithFilters(filters);
 
         return Mono.zip(content, count)
-                .map(tuple -> new PageResult<>(
-                        tuple.getT1(),
-                        tuple.getT2(),
-                        pageable.getPageNumber(),
-                        pageSize
-                ));
+                .map(tuple -> {
+                    List<Teacher> teachers = tuple.getT1();
+                    Long totalElements = tuple.getT2();
+                    int totalPages = (int) Math.ceil((double) totalElements / pageSize);
+
+                    return new PageResult<>(
+                            teachers,
+                            totalElements,
+                            pageNumber,
+                            pageSize,
+                            totalPages
+                    );
+                });
     }
 
     @Override

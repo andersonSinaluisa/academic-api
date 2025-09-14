@@ -50,7 +50,9 @@ public class TeacherController {
                                 .toList(),
                         result.total(),
                         pageable.getPageNumber(),
-                        pageable.getPageSize()
+                        pageable.getPageSize(),
+                        result.totalPage()
+
                 ));
     }
 

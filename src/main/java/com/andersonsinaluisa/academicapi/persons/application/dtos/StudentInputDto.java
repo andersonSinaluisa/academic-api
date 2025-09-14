@@ -7,14 +7,14 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class StudentInputDto {
-    public String fistName;
+    public String firstName;
     public String lastName;
     public String phone;
     public LocalDate birthDate;
     public String uuidUser;
     public String address;
     public String identification;
-    public String nacionality;
+    public String nationality;
     public String gender;
     public String image;
     public String uuidCurrentParallel;

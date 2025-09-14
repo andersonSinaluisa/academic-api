@@ -1,14 +1,14 @@
 -- liquibase formatted sql
 
 CREATE TABLE academic_year (
-    id BIGINT PRIMARY KEY,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name VARCHAR,
     start_date DATE,
     end_date DATE
 );
 
 CREATE TABLE grading_system (
-    id BIGINT PRIMARY KEY,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name VARCHAR,
     description VARCHAR,
     number_of_terms INT,
@@ -16,7 +16,7 @@ CREATE TABLE grading_system (
 );
 
 CREATE TABLE grading_term (
-    id BIGINT PRIMARY KEY,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     grading_system_id BIGINT REFERENCES grading_system(id),
     name VARCHAR,
     "order" INT,
@@ -24,13 +24,13 @@ CREATE TABLE grading_term (
 );
 
 CREATE TABLE academic_year_grading (
-    id BIGINT PRIMARY KEY,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     academic_year_id BIGINT REFERENCES academic_year(id),
     grading_system_id BIGINT REFERENCES grading_system(id)
 );
 
 CREATE TABLE student (
-    id BIGINT PRIMARY KEY,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     first_name VARCHAR,
     last_name VARCHAR,
     phone VARCHAR,
@@ -52,7 +52,7 @@ CREATE TABLE student (
 );
 
 CREATE TABLE representative (
-    id BIGINT PRIMARY KEY,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     first_name VARCHAR,
     last_name VARCHAR,
     phone VARCHAR,
@@ -72,7 +72,7 @@ CREATE TABLE representative (
 );
 
 CREATE TABLE student_representative (
-    id BIGINT PRIMARY KEY,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     relationship VARCHAR,
     student_id BIGINT REFERENCES student(id),
     representative_id BIGINT REFERENCES representative(id),
@@ -81,7 +81,7 @@ CREATE TABLE student_representative (
 );
 
 CREATE TABLE teacher (
-    id BIGINT PRIMARY KEY,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     first_name VARCHAR,
     last_name VARCHAR,
     phone VARCHAR,
@@ -100,7 +100,7 @@ CREATE TABLE teacher (
 );
 
 CREATE TABLE term (
-    id BIGINT PRIMARY KEY,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     academic_year_id BIGINT REFERENCES academic_year(id),
     name VARCHAR,
     start_date DATE,
@@ -113,13 +113,13 @@ CREATE TABLE subject (
 );
 
 CREATE TABLE assessment_type (
-    id BIGINT PRIMARY KEY,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name VARCHAR,
     weight DOUBLE PRECISION
 );
 
 CREATE TABLE assessment (
-    id BIGINT PRIMARY KEY,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     subject_id VARCHAR REFERENCES subject(id),
     teacher_id BIGINT REFERENCES teacher(id),
     academic_year_id BIGINT REFERENCES academic_year(id),
@@ -131,7 +131,7 @@ CREATE TABLE assessment (
 );
 
 CREATE TABLE grade (
-    id BIGINT PRIMARY KEY,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     assessment_id BIGINT REFERENCES assessment(id),
     student_id BIGINT REFERENCES student(id),
     subject_id VARCHAR REFERENCES subject(id),
@@ -142,7 +142,7 @@ CREATE TABLE grade (
 );
 
 CREATE TABLE final_grade (
-    id BIGINT PRIMARY KEY,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     academic_year_id BIGINT REFERENCES academic_year(id),
     student_id BIGINT REFERENCES student(id),
     average_score DOUBLE PRECISION,
@@ -150,7 +150,7 @@ CREATE TABLE final_grade (
 );
 
 CREATE TABLE term_grade (
-    id BIGINT PRIMARY KEY,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     term_id BIGINT REFERENCES term(id),
     subject_id VARCHAR REFERENCES subject(id),
     student_id BIGINT REFERENCES student(id),
@@ -159,7 +159,7 @@ CREATE TABLE term_grade (
 );
 
 CREATE TABLE report_card (
-    id BIGINT PRIMARY KEY,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     academic_year_id BIGINT REFERENCES academic_year(id),
     student_id BIGINT REFERENCES student(id),
     average_score DOUBLE PRECISION,
@@ -167,7 +167,7 @@ CREATE TABLE report_card (
 );
 
 CREATE TABLE enrollment (
-    id BIGINT PRIMARY KEY,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     student_id BIGINT REFERENCES student(id),
     course_id VARCHAR,
     academic_year_id BIGINT REFERENCES academic_year(id),
@@ -176,13 +176,13 @@ CREATE TABLE enrollment (
 );
 
 CREATE TABLE subject_enrollment (
-    id BIGINT PRIMARY KEY,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     enrollment_id BIGINT REFERENCES enrollment(id),
     subject_id VARCHAR REFERENCES subject(id)
 );
 
 CREATE TABLE teacher_assignment (
-    id BIGINT PRIMARY KEY,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     teacher_id BIGINT REFERENCES teacher(id),
     subject_id VARCHAR REFERENCES subject(id),
     course_id VARCHAR,
@@ -190,7 +190,7 @@ CREATE TABLE teacher_assignment (
 );
 
 CREATE TABLE disciplinary_action (
-    id BIGINT PRIMARY KEY,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     student_id BIGINT REFERENCES student(id),
     date DATE,
     action VARCHAR,
@@ -198,7 +198,7 @@ CREATE TABLE disciplinary_action (
 );
 
 CREATE TABLE behavior_report (
-    id BIGINT PRIMARY KEY,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     student_id BIGINT REFERENCES student(id),
     term_id BIGINT REFERENCES term(id),
     score DOUBLE PRECISION,
@@ -206,7 +206,7 @@ CREATE TABLE behavior_report (
 );
 
 CREATE TABLE attendance (
-    id BIGINT PRIMARY KEY,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     subject_id VARCHAR REFERENCES subject(id),
     student_id BIGINT REFERENCES student(id),
     date DATE,
@@ -215,7 +215,7 @@ CREATE TABLE attendance (
 );
 
 CREATE TABLE meeting (
-    id BIGINT PRIMARY KEY,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     course_id VARCHAR,
     academic_year_id BIGINT REFERENCES academic_year(id),
     meeting_date DATE,
@@ -225,7 +225,7 @@ CREATE TABLE meeting (
 );
 
 CREATE TABLE meeting_minutes (
-    id BIGINT PRIMARY KEY,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     meeting_id BIGINT REFERENCES meeting(id),
     summary VARCHAR,
     decisions VARCHAR,
@@ -233,14 +233,14 @@ CREATE TABLE meeting_minutes (
 );
 
 CREATE TABLE meeting_attachment (
-    id BIGINT PRIMARY KEY,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     meeting_id BIGINT REFERENCES meeting(id),
     file_url VARCHAR,
     description VARCHAR
 );
 
 CREATE TABLE meeting_attendance (
-    id BIGINT PRIMARY KEY,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     meeting_id BIGINT REFERENCES meeting(id),
     person_id BIGINT,
     role VARCHAR,
@@ -248,7 +248,7 @@ CREATE TABLE meeting_attendance (
 );
 
 CREATE TABLE audit_log (
-    id BIGINT PRIMARY KEY,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     entity VARCHAR,
     entity_id BIGINT,
     action VARCHAR,

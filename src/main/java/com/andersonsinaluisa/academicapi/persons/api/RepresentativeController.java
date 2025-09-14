@@ -4,8 +4,10 @@ package com.andersonsinaluisa.academicapi.persons.api;
 import com.andersonsinaluisa.academicapi.persons.application.dtos.RepresentativeInputDto;
 import com.andersonsinaluisa.academicapi.persons.application.dtos.RepresentativeOutputDto;
 import com.andersonsinaluisa.academicapi.persons.application.mappers.RepresentativeMapper;
+import com.andersonsinaluisa.academicapi.persons.application.mappers.StudentMapper;
 import com.andersonsinaluisa.academicapi.persons.application.usecases.representative.*;
 import com.andersonsinaluisa.academicapi.persons.domain.entities.Representative;
+import com.andersonsinaluisa.academicapi.shared.domain.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,13 +36,22 @@ public class RepresentativeController {
     }
 
     @GetMapping
-    public Mono<Page<RepresentativeOutputDto>> list(
+    public Mono<PageResult<RepresentativeOutputDto>> list(
             @RequestParam("page") int page,
             @RequestParam("limit") int limit
     ){
         Pageable pageable = Pageable.ofSize(limit).withPage(page);
         return listRepresentativeUseCase.execute(pageable)
-                .map(p -> p.map(RepresentativeMapper::fromDomainToDto));
+                .map(result -> new PageResult<>(
+                        result.content().stream()
+                                .map(RepresentativeMapper::fromDomainToDto)
+                                .toList(),
+                        result.total(),
+                        pageable.getPageNumber(),
+                        pageable.getPageSize(),
+                        result.totalPage()
+
+                ));
     }
 
     @GetMapping("{id}")

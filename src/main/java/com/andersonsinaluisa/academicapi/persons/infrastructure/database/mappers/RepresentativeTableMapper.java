@@ -13,14 +13,14 @@ public  class RepresentativeTableMapper {
     public static Representative fromPersistenceToDomain(RepresentativeTable table){
         return Representative.builder()
                 .id(table.id)
-                .fullName(new FullName(table.firtName,table.lastName))
+                .fullName(new FullName(table.firstName,table.lastName))
                 .phone(new PhoneNumber(table.phone))
                 .birthDate(new BirthDate(table.birthDate))
                 .typePerson(TypePerson.REPRESENTATIVE)
                 .uuidUser(table.uuidUser)
                 .address(table.address)
                 .identification(new Identification(table.identification))
-                .nacionality(table.nacionality)
+                .nacionality(table.nationality)
                 .gender(table.gender)
                 .image(table.image)
                 .build();
@@ -29,7 +29,7 @@ public  class RepresentativeTableMapper {
 
     public static RepresentativeTable fromDomainToPersistence(Representative object){
         return RepresentativeTable.builder()
-                .firtName(object.fullName.getFirstName())
+                .firstName(object.fullName.getFirstName())
                 .lastName(object.fullName.getLastName())
                 .birthDate(object.birthDate.getValue())
                 .gender(object.gender)
@@ -37,7 +37,7 @@ public  class RepresentativeTableMapper {
                 .address(object.address)
                 .identification(object.identification.getValue())
                 .phone(object.phone.getValue())
-                .nacionality(object.nacionality)
+                .nationality(object.nacionality)
                 .uuidUser(object.uuidUser)
                 .build();
     }

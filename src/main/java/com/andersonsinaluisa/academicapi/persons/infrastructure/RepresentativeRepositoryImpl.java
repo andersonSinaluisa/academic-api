@@ -1,17 +1,20 @@
 package com.andersonsinaluisa.academicapi.persons.infrastructure;
 
 import com.andersonsinaluisa.academicapi.persons.domain.entities.Representative;
+import com.andersonsinaluisa.academicapi.persons.domain.entities.Student;
 import com.andersonsinaluisa.academicapi.persons.domain.repository.RepresentativeRepository;
 import com.andersonsinaluisa.academicapi.persons.infrastructure.database.mappers.RepresentativeTableMapper;
 import com.andersonsinaluisa.academicapi.persons.infrastructure.database.repository.RepresentativePgRepository;
 import com.andersonsinaluisa.academicapi.persons.infrastructure.database.repository.custom.RepresentativeCustomRepository;
 import com.andersonsinaluisa.academicapi.shared.domain.FilterCriteria;
+import com.andersonsinaluisa.academicapi.shared.domain.PageResult;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -19,9 +22,10 @@ import java.util.List;
 @Repository
 public class RepresentativeRepositoryImpl implements RepresentativeRepository {
 
-
-    private final RepresentativePgRepository representativePgRepository;
-    private final RepresentativeCustomRepository representativeCustomRepository;
+    @Autowired
+    private  RepresentativePgRepository representativePgRepository;
+    @Autowired
+    private  RepresentativeCustomRepository representativeCustomRepository;
 
     public RepresentativeRepositoryImpl (RepresentativePgRepository representativePgRepository,
     RepresentativeCustomRepository representativeCustomRepository){
@@ -62,10 +66,12 @@ public class RepresentativeRepositoryImpl implements RepresentativeRepository {
     }
 
     @Override
-    public Mono<Page<Representative>> all(Pageable pageable,
-                                          FilterCriteria filterCriteria) {
+    public Mono<PageResult<Representative>> all(Pageable pageable,
+                                                FilterCriteria filterCriteria) {
+
+        int pageNumber = pageable.getPageNumber() == 0 ? 0 : pageable.getPageNumber() - 1;
         int pageSize = pageable.getPageSize();
-        int offset = (int) pageable.getOffset();
+        int offset = pageNumber * pageSize;
 
         Mono<List<Representative>> content = representativeCustomRepository
                 .findAllWithFilters(filterCriteria,pageSize, offset)
@@ -75,8 +81,18 @@ public class RepresentativeRepositoryImpl implements RepresentativeRepository {
         Mono<Long> count = representativeCustomRepository.countWithFilters(filterCriteria);
 
         return Mono.zip(content, count)
-                .map(tuple ->
-                        new PageImpl<>(tuple.getT1(), pageable, tuple.getT2()));
+                .map(tuple -> {
+                    List<Representative> teachers = tuple.getT1();
+                    Long totalElements = tuple.getT2();
+                    int totalPages = (int) Math.ceil((double) totalElements / pageSize);
 
+                    return new PageResult<>(
+                            teachers,
+                            totalElements,
+                            pageNumber,
+                            pageSize,
+                            totalPages
+                    );
+                });
     }
 }

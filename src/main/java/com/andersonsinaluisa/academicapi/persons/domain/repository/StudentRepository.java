@@ -2,6 +2,7 @@ package com.andersonsinaluisa.academicapi.persons.domain.repository;
 
 import com.andersonsinaluisa.academicapi.persons.domain.entities.Student;
 import com.andersonsinaluisa.academicapi.shared.domain.FilterCriteria;
+import com.andersonsinaluisa.academicapi.shared.domain.PageResult;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import reactor.core.publisher.Flux;
@@ -15,7 +16,7 @@ public interface StudentRepository {
 
     Flux<Student> getBySchoolYear(String schoolYearId);
 
-    Mono<Page<Student>> findAll(Pageable pageable, FilterCriteria filters);
+    Mono<PageResult<Student>> findAll(Pageable pageable, FilterCriteria filters);
     Mono<Student> create(Student student);
 
     Mono<Student> update(Long id, Student student);

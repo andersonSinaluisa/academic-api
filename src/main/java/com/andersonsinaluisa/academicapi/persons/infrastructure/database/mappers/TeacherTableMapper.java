@@ -15,7 +15,7 @@ public class TeacherTableMapper {
     public static Teacher fromPersistenceToDomain(TeacherTable teacherTable){
         return Teacher.builder()
                 .id(teacherTable.id)
-                .nacionality(teacherTable.nacionality)
+                .nacionality(teacherTable.nationality)
                 .gender(teacherTable.gender)
                 .image(teacherTable.image)
                 .address(teacherTable.address)
@@ -24,7 +24,7 @@ public class TeacherTableMapper {
                 .typePerson(TypePerson.TEACHER)
                 .birthDate(new BirthDate(teacherTable.birthDate))
                 .uuidUser(teacherTable.uuidUser)
-                .fullName(new FullName(teacherTable.firtName,teacherTable.lastName))
+                .fullName(new FullName(teacherTable.firstName,teacherTable.lastName))
 
                 .build();
     }
@@ -32,7 +32,8 @@ public class TeacherTableMapper {
 
     public static TeacherTable fromDomainToPersistence(Teacher teacher){
         return TeacherTable.builder()
-                .firtName(teacher.fullName.getFirstName())
+                .id(teacher.id)
+                .firstName(teacher.fullName.getFirstName())
                 .lastName(teacher.fullName.getLastName())
                 .birthDate(teacher.birthDate.getValue())
                 .image(teacher.image)
@@ -43,7 +44,7 @@ public class TeacherTableMapper {
                 .gender(teacher.gender)
                 .createdAt(LocalDate.now())
                 .deleted(false)
-                .nacionality(teacher.nacionality)
+                .nationality(teacher.nacionality)
                 .build();
     }
 }

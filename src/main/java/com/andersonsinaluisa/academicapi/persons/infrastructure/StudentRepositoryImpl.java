@@ -1,11 +1,13 @@
 package com.andersonsinaluisa.academicapi.persons.infrastructure;
 
 import com.andersonsinaluisa.academicapi.persons.domain.entities.Student;
+import com.andersonsinaluisa.academicapi.persons.domain.entities.Teacher;
 import com.andersonsinaluisa.academicapi.persons.domain.repository.StudentRepository;
 import com.andersonsinaluisa.academicapi.persons.infrastructure.database.mappers.StudentTableMapper;
 import com.andersonsinaluisa.academicapi.persons.infrastructure.database.repository.custom.StudentCustomRepository;
 import com.andersonsinaluisa.academicapi.persons.infrastructure.database.repository.StudentPgRepository;
 import com.andersonsinaluisa.academicapi.shared.domain.FilterCriteria;
+import com.andersonsinaluisa.academicapi.shared.domain.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -42,9 +44,10 @@ public class StudentRepositoryImpl implements StudentRepository {
     }
 
     @Override
-    public Mono<Page<Student>> findAll(Pageable pageable, FilterCriteria filters) {
+    public Mono<PageResult<Student>> findAll(Pageable pageable, FilterCriteria filters) {
+        int pageNumber = pageable.getPageNumber() == 0 ? 0 : pageable.getPageNumber() - 1;
         int pageSize = pageable.getPageSize();
-        int offset = (int) pageable.getOffset();
+        int offset = pageNumber * pageSize;
         Mono<List<Student>> content = studentCustomRepository
                 .findAllWithFilters(filters,pageSize, offset)
                 .map(StudentTableMapper::fromPersistenceToDomain)
@@ -53,8 +56,19 @@ public class StudentRepositoryImpl implements StudentRepository {
         Mono<Long> count = studentCustomRepository.countWithFilters(filters);
 
         return Mono.zip(content, count)
-                .map(tuple -> new PageImpl<>(tuple.getT1(), pageable, tuple.getT2()));
+                .map(tuple -> {
+                    List<Student> teachers = tuple.getT1();
+                    Long totalElements = tuple.getT2();
+                    int totalPages = (int) Math.ceil((double) totalElements / pageSize);
 
+                    return new PageResult<>(
+                            teachers,
+                            totalElements,
+                            pageNumber,
+                            pageSize,
+                            totalPages
+                    );
+                });
     }
 
     @Override

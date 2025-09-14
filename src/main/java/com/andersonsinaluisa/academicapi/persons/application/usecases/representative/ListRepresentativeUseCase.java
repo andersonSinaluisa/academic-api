@@ -2,7 +2,9 @@ package com.andersonsinaluisa.academicapi.persons.application.usecases.represent
 
 import com.andersonsinaluisa.academicapi.persons.domain.entities.Representative;
 import com.andersonsinaluisa.academicapi.persons.domain.repository.RepresentativeRepository;
+import com.andersonsinaluisa.academicapi.persons.domain.repository.StudentRepresentiveRepository;
 import com.andersonsinaluisa.academicapi.shared.domain.FilterCriteria;
+import com.andersonsinaluisa.academicapi.shared.domain.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,8 +15,12 @@ import reactor.core.publisher.Mono;
 public class ListRepresentativeUseCase {
     @Autowired
     private RepresentativeRepository representativeRepository;
-
-    public Mono<Page<Representative>> execute(Pageable pageable) {
+    private StudentRepresentiveRepository studentRepresentiveRepository;
+    public Mono<PageResult<Representative>> execute(Pageable pageable) {
         return representativeRepository.all(pageable, new FilterCriteria());
+    }
+
+    public Mono<PageResult<Representative>> execute(long studentId){
+        studentRepresentiveRepository
     }
 }

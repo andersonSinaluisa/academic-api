@@ -18,12 +18,12 @@ public class ListTeacherUseCase {
                                              String firstName, String lastName, String identification, String gender){
 
         FilterCriteria filters = new FilterCriteria();
-        if (firstName!=null && !filters.isEmpty()){
-            filters.add("firstName",firstName);
+        if (firstName!=null && !firstName.isEmpty()){
+            filters.add("first_name",firstName);
         }
 
         if(lastName!=null && !lastName.isEmpty()){
-            filters.add("lastName",lastName);
+            filters.add("last_name",lastName);
         }
 
         if(identification!=null && !identification.isEmpty()){

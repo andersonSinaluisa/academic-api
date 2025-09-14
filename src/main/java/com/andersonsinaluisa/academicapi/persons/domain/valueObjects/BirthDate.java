@@ -1,5 +1,7 @@
 package com.andersonsinaluisa.academicapi.persons.domain.valueObjects;
 
+import com.andersonsinaluisa.academicapi.persons.application.exception.BirthDateInvalidException;
+
 import java.time.LocalDate;
 import java.time.Period;
 
@@ -8,7 +10,7 @@ public class BirthDate {
 
     public BirthDate(LocalDate value) {
         if (value.isAfter(LocalDate.now())) {
-            throw new IllegalArgumentException("Birth date cannot be in the future");
+            throw new BirthDateInvalidException("Birth date cannot be in the future");
         }
         this.value = value;
     }

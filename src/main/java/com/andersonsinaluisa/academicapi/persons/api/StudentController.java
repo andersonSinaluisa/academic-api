@@ -3,6 +3,8 @@ package com.andersonsinaluisa.academicapi.persons.api;
 import com.andersonsinaluisa.academicapi.persons.application.dtos.StudentInputDto;
 import com.andersonsinaluisa.academicapi.persons.application.dtos.StudentOutputDto;
 import com.andersonsinaluisa.academicapi.persons.application.mappers.StudentMapper;
+import com.andersonsinaluisa.academicapi.persons.application.mappers.TeacherMapper;
+import com.andersonsinaluisa.academicapi.shared.domain.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,15 +36,24 @@ public class StudentController {
     }
 
     @GetMapping
-    public Mono<Page<StudentOutputDto>> list(
+    public Mono<PageResult<StudentOutputDto>> list(
             @RequestParam("page") int page,
             @RequestParam("limit") int limit,
-            @RequestParam("uuidParallel") String parallel
+            @RequestParam(value = "uuidParallel", required = false) String parallel
     ) {
         Pageable pageable = Pageable.ofSize(limit).withPage(page);
 
         return listStudentByCourseIdUseCase.execute(pageable, parallel)
-                .map(p -> p.map(StudentMapper::fromDomainToDto));
+                .map(result -> new PageResult<>(
+                        result.content().stream()
+                                .map(StudentMapper::fromDomainToDto)
+                                .toList(),
+                        result.total(),
+                        pageable.getPageNumber(),
+                        pageable.getPageSize(),
+                        result.totalPage()
+
+                ));
     }
 
     @GetMapping("{id}")

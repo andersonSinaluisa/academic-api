@@ -104,7 +104,7 @@ public class RepresentativeRepositoryImpTest {
         Pageable pageable = PageRequest.of(0, 10);
 
         StepVerifier.create(representativeRepository.all(pageable, filters))
-                .expectNextMatches(page -> page.getContent().size() <= 10)
+                .expectNextMatches(page -> page.content().size() <= 10)
                 .verifyComplete();
     }
 }

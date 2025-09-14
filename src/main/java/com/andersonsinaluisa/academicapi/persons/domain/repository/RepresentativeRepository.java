@@ -2,6 +2,7 @@ package com.andersonsinaluisa.academicapi.persons.domain.repository;
 
 import com.andersonsinaluisa.academicapi.persons.domain.entities.Representative;
 import com.andersonsinaluisa.academicapi.shared.domain.FilterCriteria;
+import com.andersonsinaluisa.academicapi.shared.domain.PageResult;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import reactor.core.publisher.Flux;
@@ -17,7 +18,7 @@ public interface RepresentativeRepository {
 
     Flux<Representative> getByStudent(Long studentId);
 
-    Mono<Page<Representative>> all(Pageable pageable, FilterCriteria filterCriteria);
+    Mono<PageResult<Representative>> all(Pageable pageable, FilterCriteria filterCriteria);
 
     Mono<Representative> getById(Long id);
 
