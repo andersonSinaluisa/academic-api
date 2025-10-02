@@ -2,6 +2,9 @@ package com.andersonsinaluisa.academicapi.academic.infrastructure.teacher;
 
 import com.andersonsinaluisa.academicapi.academic.domain.entities.teacher.TeacherAssignment;
 import com.andersonsinaluisa.academicapi.academic.domain.repository.TeacherAssignmentRepository;
+import com.andersonsinaluisa.academicapi.shared.domain.FilterCriteria;
+import com.andersonsinaluisa.academicapi.shared.domain.PageResult;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -40,5 +43,10 @@ public class TeacherAssignmentRepositoryImpl implements TeacherAssignmentReposit
         return Flux.fromStream(store.values().stream()
                 .filter(a -> (teacherId == null || teacherId.equals(a.teacherId))
                         && (courseId == null || courseId.equals(a.courseId))));
+    }
+
+    @Override
+    public Mono<PageResult<TeacherAssignment>> findAll(Pageable pageable, FilterCriteria filters) {
+        return null;
     }
 }

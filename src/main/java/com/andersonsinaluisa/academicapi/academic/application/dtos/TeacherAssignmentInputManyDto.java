@@ -1,19 +1,17 @@
 package com.andersonsinaluisa.academicapi.academic.application.dtos;
-//
+
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Builder
-public class TeacherAssignmentInputDto {
+public class TeacherAssignmentInputManyDto {
     @NotNull
     public Long teacherId;
-    @NotNull
-    public Long courseId;
-    @NotNull
-    public Long subjectId;
-    @NotNull
-    public Long schoolYearId;
-}
 
+    public List<CourseSubject> listAssignment;
+
+}

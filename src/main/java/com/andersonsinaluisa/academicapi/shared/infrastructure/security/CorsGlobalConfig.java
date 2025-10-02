@@ -8,7 +8,7 @@ public class CorsGlobalConfig  implements WebFluxConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")  // permite todas las rutas
-                .allowedOrigins("http://localhost:5173") // tu frontend
+                .allowedOrigins("http://localhost:5173","http://localhost:3002") // tu frontend
                 .allowedMethods("GET", "POST", "PUT","PATCH", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);

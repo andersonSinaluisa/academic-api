@@ -1,6 +1,7 @@
 package com.andersonsinaluisa.academicapi.academic.api.controllers;
 
 import com.andersonsinaluisa.academicapi.academic.application.dtos.TeacherAssignmentInputDto;
+import com.andersonsinaluisa.academicapi.academic.application.dtos.TeacherAssignmentInputManyDto;
 import com.andersonsinaluisa.academicapi.academic.application.dtos.TeacherAssignmentOutputDto;
 import com.andersonsinaluisa.academicapi.academic.application.usecases.teacherassignment.GetTeacherAssignmentUseCase;
 import com.andersonsinaluisa.academicapi.academic.application.usecases.teacherassignment.RegisterTeacherAssignmentUseCase;
@@ -13,6 +14,8 @@ import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/teacher-assignments")
 @RequiredArgsConstructor
@@ -23,13 +26,18 @@ public class TeacherAssignmentController {
     private final SearchTeacherAssignmentsUseCase searchUseCase;
 
     @PostMapping
-    public Mono<TeacherAssignmentOutputDto> register(@Valid @RequestBody TeacherAssignmentInputDto dto,
-                                                     @RequestHeader("X-Teacher-Id") Long teacherId) {
-        if (!teacherId.equals(dto.teacherId)) {
-            return Mono.error(new ResponseStatusException(HttpStatus.FORBIDDEN));
-        }
+    public Mono<TeacherAssignmentOutputDto> register(@Valid @RequestBody TeacherAssignmentInputDto dto) {
+
         return registerUseCase.execute(dto);
     }
+    @PostMapping("/batch")
+    public Mono<List<TeacherAssignmentOutputDto>> registerMany(
+            @RequestBody TeacherAssignmentInputManyDto dto
+            ){
+        return registerUseCase.execute(dto);
+    }
+
+
 
     @GetMapping("/{id}")
     public Mono<TeacherAssignmentOutputDto> get(@PathVariable Long id,
@@ -40,8 +48,8 @@ public class TeacherAssignmentController {
 
     @GetMapping
     public Flux<TeacherAssignmentOutputDto> search(@RequestParam Long teacherId,
-                                                   @RequestParam(required = false) Long courseId,
-                                                   @RequestHeader("X-Teacher-Id") Long headerTeacherId) {
+                                                   @RequestParam(required = false) Long courseId
+                                                   ) {
         if (!headerTeacherId.equals(teacherId)) {
             return Flux.error(new ResponseStatusException(HttpStatus.FORBIDDEN));
         }

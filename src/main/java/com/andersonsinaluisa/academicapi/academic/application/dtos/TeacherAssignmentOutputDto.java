@@ -15,3 +15,4 @@ public class TeacherAssignmentOutputDto {
     public Long schoolYearId;
     public LocalDateTime createdAt;
 }
+

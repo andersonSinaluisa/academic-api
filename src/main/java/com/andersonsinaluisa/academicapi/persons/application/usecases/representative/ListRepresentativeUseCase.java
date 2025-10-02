@@ -21,6 +21,6 @@ public class ListRepresentativeUseCase {
     }
 
     public Mono<PageResult<Representative>> execute(long studentId){
-        studentRepresentiveRepository
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 }
