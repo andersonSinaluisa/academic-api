@@ -13,6 +13,7 @@ public class FindAllTeacherAssignmentUseCase {
     private final TeacherAssignmentRepository repository;
 
     public Flux<TeacherAssignmentOutputDto> execute(Pageable pageable){
-
+        return repository.findAll(pageable)
+                .map(TeacherAssignmentOutputDto::fromDomain);
     }
 }
