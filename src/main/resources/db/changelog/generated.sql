@@ -186,7 +186,8 @@ CREATE TABLE teacher_assignment (
     teacher_id BIGINT REFERENCES teacher(id),
     subject_id VARCHAR REFERENCES subject(id),
     course_id VARCHAR,
-    academic_year_id BIGINT REFERENCES academic_year(id)
+    academic_year_id BIGINT REFERENCES academic_year(id),
+    created_at TIMESTAMP
 );
 
 CREATE TABLE disciplinary_action (
